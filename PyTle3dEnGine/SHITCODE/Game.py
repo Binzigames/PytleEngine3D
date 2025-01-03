@@ -5,6 +5,8 @@ class Game:
     def __init__(self):
         pr.init_window(800, 450, "Hello")
         self.scene = ass.BaseScene()
+        pr.hide_cursor()
+        pr.disable_cursor()
 
     def run(self):
         while not pr.window_should_close():
