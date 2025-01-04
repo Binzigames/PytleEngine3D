@@ -1,0 +1,3 @@
+PR - pip3 install raylib==5.5.0.0
+GLM - pip install PyGLM
+NM - pip install numpy
