@@ -1,6 +1,10 @@
 import pyray as pr
 import math
 
+def round_int(x):
+    if x in [float("-inf"), float("inf")]: return str(x)
+    return int(x)
+
 class Base:
     def __init__(self, x, y, z, rot, scaleX, scaleY, scaleZ):
         self.x = x
@@ -23,10 +27,10 @@ class Cube(Base):
     def Draw(self):
         pr.draw_cube(pr.Vector3(self.x, self.y, self.z), self.scale.x, self.scale.y, self.scale.z, self.color)
         pr.draw_cube_wires(pr.Vector3(self.x, self.y, self.z), self.scale.x, self.scale.y, self.scale.z, pr.BLACK)
-        
         self.UpdateCollision()
 
     def UpdateCollision(self):
         self.CollisionsPos = pr.Vector3(self.x, self.y, self.z)
         self.CollisionsScale = pr.Vector3(self.scale.x, self.scale.y, self.scale.z)
+
     

@@ -7,9 +7,10 @@ class Debug:
         self.BaseAndStats = []
         self.isShow = False
 
-    def Draw(self):
+    def Draw(self, camera):
         self.BaseAndStats = ["FPS: {FPS}".format(FPS = pr.get_fps()),
-                             "FrameTime: {fT}".format(fT = pr.get_frame_time())]
+                             "FrameTime: {fT}".format(fT = pr.get_frame_time()),
+                             "CameraX: {x}".format(x = camera)]
         
 
         if(self.isShow == True):
