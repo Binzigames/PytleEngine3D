@@ -29,5 +29,4 @@ class Cube(Base):
     def UpdateCollision(self):
         self.CollisionsPos = pr.Vector3(self.x, self.y, self.z)
         self.CollisionsScale = pr.Vector3(self.scale.x, self.scale.y, self.scale.z)
-
     
