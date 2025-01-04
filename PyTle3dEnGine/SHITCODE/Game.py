@@ -1,10 +1,23 @@
 import pyray as pr
 import SHITCODE.Scene1 as ass
 import SHITCODE.Debug as debugg
+import SHITCODE.SceneReader as SR
+from SHITCODE.SceneReader import ReadScene
+
+
 class Game:
     def __init__(self):
         pr.set_config_flags(pr.ConfigFlags.FLAG_WINDOW_RESIZABLE | pr.ConfigFlags.FLAG_VSYNC_HINT)
-        pr.init_window(1280, 900, "Hello")
+        pr.init_window(1280, 900, "Pytle3D (proto ver.)")
+        self.Test_map =[
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
+            [1, 0,0 , 1, 1, 1, 0, 0, 0, 1,],
+            [1, 0, 0, 0, 1, 0, 0, 0, 0, 1,],
+            [1, 0, 0, 0, 1, 0, 0, 0, 0, 1,],
+            [1, 0, 0, 1, 0, 0, 0, 0, 0, 1,],
+            [1, 0, 1, 0, 0, 0, 0, 0, 0, 1,],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,]
+        ]
 
         self.gameScreenWidth = 704
         self.gameScreenHeight = 480
@@ -12,7 +25,7 @@ class Game:
         self.renderScreen = pr.load_render_texture(self.gameScreenWidth, self.gameScreenHeight)
         self.scale = 0
         #pr.set_target_fps(60)
-        self.scene = ass.BaseScene()
+        self.scene = SR.ReadScene()
         self.debug = debugg.Debug()
         #pr.toggle_fullscreen()
         
@@ -28,7 +41,8 @@ class Game:
     def draw(self):
         pr.begin_texture_mode(self.renderScreen)
         pr.clear_background(pr.GRAY)
-        self.scene.Draw()
+        #self.scene.Draw()
+        self.scene.Draw(0.4,self.Test_map)
         self.debug.Draw()
         #pr.draw_fps(0, 0)
         pr.end_texture_mode()
