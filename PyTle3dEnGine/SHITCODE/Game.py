@@ -25,13 +25,8 @@ class Game:
         self.renderScreen = pr.load_render_texture(self.gameScreenWidth, self.gameScreenHeight)
         self.scale = 0
         #pr.set_target_fps(60)
-<<<<<<< HEAD
-        self.scene = ass.BaseScene()
-        
-=======
         self.scene = SR.ReadScene()
         self.debug = debugg.Debug()
->>>>>>> 11fd0b5dffb3c16218de8f38489d77348a5e2012
         #pr.toggle_fullscreen()
         
     
@@ -46,13 +41,9 @@ class Game:
     def draw(self):
         pr.begin_texture_mode(self.renderScreen)
         pr.clear_background(pr.GRAY)
-<<<<<<< HEAD
-        self.scene.Draw()
-=======
         #self.scene.Draw()
         self.scene.Draw(0.4,self.Test_map)
         self.debug.Draw()
->>>>>>> 11fd0b5dffb3c16218de8f38489d77348a5e2012
         #pr.draw_fps(0, 0)
         pr.end_texture_mode()
 
@@ -64,6 +55,13 @@ class Game:
     def update(self):
         self.scale = min(float(pr.get_screen_width()/self.gameScreenWidth), float(pr.get_screen_height()/self.gameScreenHeight))
         self.scene.Update()
+        if pr.is_key_down(pr.KeyboardKey.KEY_TAB):
+            self.debug.isShow = True
+            pr.show_cursor()
+        else:
+            self.debug.isShow = False
+            pr.set_mouse_position(int(pr.get_screen_width()/2), int(pr.get_screen_height()/2))
+            pr.hide_cursor()
             
         
         
