@@ -19,8 +19,8 @@ class Game:
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,]
         ]
 
-        self.gameScreenWidth = 732
-        self.gameScreenHeight = 480
+        self.gameScreenWidth = 1920
+        self.gameScreenHeight = 1080
         self.renderScreen = pr.RenderTexture2D
         self.renderScreen = pr.load_render_texture(self.gameScreenWidth, self.gameScreenHeight)
         self.scale = 0
