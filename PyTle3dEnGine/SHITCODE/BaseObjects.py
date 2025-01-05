@@ -37,4 +37,19 @@ class Cube(Base):
         self.CollisionsPos = pr.Vector3(self.x, self.y, self.z)
         self.CollisionsScale = pr.Vector3(self.scale.x, self.scale.y, self.scale.z)
 
-    
+class Skybox(Base):
+    def __init__(self, x, y, z, rot, scaleX, scaleY, scaleZ):
+        super().__init__(x, y, z, rot, scaleX, scaleY, scaleZ)
+        self.image = pr.gen_image_perlin_noise(264, 264, 0, 0, 5)
+        self.texture = pr.load_texture_from_image(self.image)
+        self.model = pr.load_model_from_mesh(pr.gen_mesh_plane(self.scale.x, self.scale.z, 4, 3))
+        self.model.materials[0].maps[pr.MaterialMapIndex.MATERIAL_MAP_ALBEDO].texture = self.texture
+
+
+    def Draw(self):
+        pr.rl_push_matrix()
+        pr.rl_rotatef(180, 1, 0, 0)
+        pr.begin_blend_mode(2)
+        pr.draw_model(self.model, pr.Vector3(self.x, self.y, self.z), 1, pr.WHITE)
+        pr.end_blend_mode()
+        pr.rl_pop_matrix()

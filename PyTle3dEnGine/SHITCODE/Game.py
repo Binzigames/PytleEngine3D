@@ -9,6 +9,7 @@ class Game:
     def __init__(self):
         pr.set_config_flags(pr.ConfigFlags.FLAG_WINDOW_RESIZABLE | pr.ConfigFlags.FLAG_VSYNC_HINT)
         pr.init_window(1280, 900, "Pytle3D (proto ver.)")
+        pr.init_audio_device()
         self.Test_map =[
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
             [1, 0,0 , 1, 1, 1, 0, 0, 0, 1,],
@@ -23,7 +24,7 @@ class Game:
         self.gameScreenHeight = 480
         self.renderScreen = pr.RenderTexture2D
         self.renderScreen = pr.load_render_texture(self.gameScreenWidth, self.gameScreenHeight)
-        pr.set_texture_filter(self.renderScreen.texture, 1)
+        #pr.set_texture_filter(self.renderScreen.texture, 1)
         self.scale = 0
         #pr.set_target_fps(60)
         self.scene = ass.BaseScene()
