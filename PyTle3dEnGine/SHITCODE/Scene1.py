@@ -1,6 +1,6 @@
 import pyray as pr
 import SHITCODE.BaseObjects as Obj
-import SHITCODE.Entity as Ent
+import SHITCODE.entity as Ent
 import SHITCODE.Debug as dg
 import SHITCODE.Hud as hud
 import numpy as np
