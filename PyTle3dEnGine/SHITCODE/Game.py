@@ -19,10 +19,11 @@ class Game:
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,]
         ]
 
-        self.gameScreenWidth = 1920
-        self.gameScreenHeight = 1080
+        self.gameScreenWidth = 732
+        self.gameScreenHeight = 480
         self.renderScreen = pr.RenderTexture2D
         self.renderScreen = pr.load_render_texture(self.gameScreenWidth, self.gameScreenHeight)
+        pr.set_texture_filter(self.renderScreen.texture, 1)
         self.scale = 0
         #pr.set_target_fps(60)
         self.scene = ass.BaseScene()

@@ -12,11 +12,14 @@ class BaseScene:
         self.hud = hud.Hud()
         self.camera = pr.Camera3D([1.0, 1.0, 1.0], [0.0, 0.0, 0.0], [0.0, 1.0, 0.0], 60, 0)
         self.cubes = [Obj.Cube(1, 2, 2, 0, 5 * 21, 0.2, 5 * 21, pr.BLUE),
-                      Obj.Cube(30, 2, 2, 0, 1, 1, 1, pr.BLACK)]
+                      Obj.Cube(30, 2, 2, 0, 1, 20, 1, pr.BLACK)]
         
         self.player = Ent.Player(1, 50, 2, 2, 2, 2)
         self.count = 0
         self.cameraa = self.player.camera
+
+        self.memeImg = pr.load_image("./SHITVISUAL/SHITTEXTURES/93e.jpeg")
+        self.memeTexture = pr.load_texture_from_image(self.memeImg)
 
         
     # Я їбав цей пітон сука блять  
@@ -29,10 +32,10 @@ class BaseScene:
         self.player.Draw()
 
         pr.draw_grid(250, 2)
+        pr.draw_billboard(self.cameraa, self.memeTexture, pr.Vector3(0, 10, 0), 10, pr.WHITE)
         pr.end_mode_3d()
         self.debug.Draw(self.cameraa)
         self.hud.draw()
-
         
 
     def Update(self):

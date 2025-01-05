@@ -18,12 +18,12 @@ class Entity:
 class Player(Entity):
     def __init__(self, x, y, z, speed, velocity, acceleration):
         super().__init__(x, y, z, speed, velocity, acceleration)
-        self.camera = pr.Camera3D(pr.Vector3(self.x, self.y, self.z), pr.Vector3(2, 2, 2), pr.Vector3(0, 1, 0), 60, 0)
+        self.camera = pr.Camera3D(pr.Vector3(self.x, self.y, self.z), pr.Vector3(2, 2, 2), pr.Vector3(0, 1, 0), 70, 0)
         
         self.scale = pr.Vector3(0.1, 0.5, 0.1)
 
         self.rotation_angle = 0.0
-        self.speed = 5
+        self.speed = 4
         self.sensivity = 5
         
         self.gravity = 15
@@ -41,7 +41,12 @@ class Player(Entity):
         self.y = self.camera.position.y - 0.2
         self.z = self.camera.position.z
 
-        
+        if pr.is_key_down(pr.KeyboardKey.KEY_LEFT_SHIFT):
+            self.speed = 10
+            self.camera.fovy = 80
+        else:
+            self.speed = 4
+            self.camera.fovy = 70
         
 
 
