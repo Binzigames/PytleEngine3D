@@ -3,13 +3,22 @@ import glm
 class Hud:
     def __init__(self):
         self.font = pr.load_font("./SHITVISUAL/SHITFONTS/HomeVideo-Regular.ttf")
-        self.count = 0
+        self.count = 800
 
-    def draw(self):
-        self.count += 1
+    def draw(self, music, level):
+        self.count -= 2
+        if self.count >= -100:
+            self.DrawTextShadows("M: " + music, self.count, 20, 20, 2, pr.WHITE)
+            self.DrawTextShadows(level, self.count, 40, 40, 4, pr.BLUE)
+        else:
+            self.count = -100
+
+        
         pr.draw_circle(0, 480, 50, pr.RED)
-        self.DrawTextShadows("100", 20, 400, 55, 2, pr.RED)
+        self.DrawTextShadows(f"{self.count}", 20, 400, 55, 5, pr.RED)
 
     def DrawTextShadows(self, text, posX, posY, size, leng, color):
-        pr.draw_text_pro(self.font, text, pr.Vector2(posX + leng, posY + leng), pr.Vector2(0, 0), 15, size, 1, pr.BLACK)
-        pr.draw_text_pro(self.font, text, pr.Vector2(posX, posY), pr.Vector2(0, 0), 15, size, 1, color)
+        pr.draw_text(text, posX+leng, posY+leng, size, pr.BLACK)
+        pr.draw_text(text, posX, posY, size, color)
+            
+            

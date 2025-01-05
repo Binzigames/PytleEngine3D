@@ -34,11 +34,11 @@ class BaseScene:
         
         self.player.Draw()
 
-        pr.draw_grid(250, 2)
+        #pr.draw_grid(250, 2)
         pr.draw_billboard(self.cameraa, self.memeTexture, pr.Vector3(0, 5, 0), 1, pr.WHITE)
         pr.end_mode_3d()
+        self.hud.draw("Bad Apple", "Test ZonE")
         self.debug.Draw(self.cameraa)
-        self.hud.draw()
         pr.draw_text(f"{self.count}", 10, 10, 10, pr.WHITE)
         
 
