@@ -11,9 +11,11 @@ class BaseScene:
         self.debug = dg.Debug()
         self.hud = hud.Hud()
         self.camera = pr.Camera3D([1.0, 1.0, 1.0], [0.0, 0.0, 0.0], [0.0, 1.0, 0.0], 60, 0)
-        self.cubes = [Obj.Cube(1, 2, 2, 0, 5 * 21, 0.2, 5 * 21, pr.BLUE),
-                      Obj.Cube(30, 2, 2, 0, 1, 20, 1, pr.BLACK),
+        self.cubes =  [Obj.Cube(50, 5, 50, 0, 10, 1, 10, pr.BLACK),
+                      Obj.Cube(1, 2, 2, 0, 5 * 21, 0.2, 5 * 21, pr.BLUE),
+                      Obj.Marisa(0, 0, 0, 0, 1, 1, 1),
                       Obj.Skybox(0, -100, 0, 0, 5000, 0, 5000)]
+        
         self.player = Ent.Player(1, 50, 2, 2, 2, 2)
         self.count = 0
         self.cameraa = self.player.camera
@@ -37,18 +39,20 @@ class BaseScene:
         #pr.draw_grid(250, 2)
         pr.draw_billboard(self.cameraa, self.memeTexture, pr.Vector3(0, 5, 0), 1, pr.WHITE)
         pr.end_mode_3d()
-        self.hud.draw("Bad Apple", "Test ZonE")
+        self.hud.draw("Bad Apple", "Test ZonE", self.player.collidedPosition)
         self.debug.Draw(self.cameraa)
-        pr.draw_text(f"{self.count}", 10, 10, 10, pr.WHITE)
+        pr.draw_text(f"{self.cubes[2].model.meshCount}", 10, 15, 10, pr.WHITE)
         
 
     def Update(self):
         pr.update_music_stream(self.music)
-        #pr.update_camera(self.camera, pr.CameraMode.CAMERA_FREE)
+        pr.update_camera(self.camera, pr.CameraMode.CAMERA_FREE)
         self.player.Update()
-        self.player.DetectCollision(self.cubes[0])
         for i in range(len(self.cubes)):
             self.cubes[i].UpdateCollision()
+            self.player.DetectCollisionRay(self.cubes[i].model)
+            self.player.DetectCollisionBase(self.cubes[i])
+        
     
 
         if pr.is_key_pressed(pr.KeyboardKey.KEY_TAB) and self.debug.isShow == False:

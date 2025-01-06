@@ -27,6 +27,7 @@ class Cube(Base):
         self.model = pr.load_model_from_mesh(pr.gen_mesh_cube(self.scale.x, self.scale.y, self.scale.z))
         self.model.materials[0].maps[pr.MaterialMapIndex.MATERIAL_MAP_ALBEDO].texture = self.texture
         
+        
 
     def Draw(self):
         pr.draw_model(self.model, pr.Vector3(self.x, self.y, self.z), 1, pr.WHITE)
@@ -36,6 +37,8 @@ class Cube(Base):
     def UpdateCollision(self):
         self.CollisionsPos = pr.Vector3(self.x, self.y, self.z)
         self.CollisionsScale = pr.Vector3(self.scale.x, self.scale.y, self.scale.z)
+
+
 
 class Skybox(Base):
     def __init__(self, x, y, z, rot, scaleX, scaleY, scaleZ):
@@ -53,3 +56,14 @@ class Skybox(Base):
         pr.draw_model(self.model, pr.Vector3(self.x, self.y, self.z), 1, pr.WHITE)
         pr.end_blend_mode()
         pr.rl_pop_matrix()
+
+class Marisa(Base):
+    def __init__(self, x, y, z, rot, scaleX, scaleY, scaleZ):
+        super().__init__(x, y, z, rot, scaleX, scaleY, scaleZ)
+        self.image = pr.load_image("./Marisa Kirisame/marisa.png")
+        self.texture = pr.load_texture_from_image(self.image)
+        self.model = pr.load_model("./Marisa Kirisame/Marisa_Kirisame.obj")
+        self.model.materials[0].maps[pr.MaterialMapIndex.MATERIAL_MAP_ALBEDO].texture = self.texture
+
+    def Draw(self):
+        pr.draw_model(self.model, pr.Vector3(self.x, self.y, self.z), 1, pr.WHITE)
