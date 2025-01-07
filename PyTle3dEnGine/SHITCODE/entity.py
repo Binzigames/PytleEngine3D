@@ -22,14 +22,11 @@ class Player(Entity):
         
         self.scale = pr.Vector3(0.1, 0.5, 0.1)
 
-        self.rotation_angle = 0.0
         self.speed = 4
         self.sensivity = 5
         
-        self.gravity = 4
+        self.gravity = 10
         self.gravitySpeed = 0
-        self.force = 2
-        self.mass = 3
         self.floorRay = pr.Ray(pr.Vector3(self.x, self.y, self.z), pr.Vector3(self.x, 0, self.z))
         self.collidedFloor = False
         self.collidedPosition = 0  # Initial rotation angle in degree
@@ -37,7 +34,6 @@ class Player(Entity):
     def Draw(self):
         pr.draw_cube_wires(pr.Vector3(self.x, self.y, self.z), self.scale.x, self.scale.y, self.scale.z, pr.WHITE)
         pr.draw_ray(pr.Ray(pr.Vector3(self.camera.position.x, self.camera.position.y, self.camera.position.z), pr.Vector3(self.camera.target.x, self.camera.target.y, self.camera.target.z)), pr.BLACK)
-        pr.draw_ray(self.floorRay, pr.GREEN)
 
    
     def Update(self):
