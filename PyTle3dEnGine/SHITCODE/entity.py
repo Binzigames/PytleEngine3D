@@ -26,7 +26,7 @@ class Player(Entity):
         self.speed = 4
         self.sensivity = 5
         
-        self.gravity = 15
+        self.gravity = 4
         self.gravitySpeed = 0
         self.force = 2
         self.mass = 3
@@ -54,19 +54,29 @@ class Player(Entity):
             self.camera.fovy = 70
         
 
+
         if self.collidedFloor == False:
             self.gravitySpeed += self.gravity * pr.get_frame_time()
             self.camera.position.y += 0.2 - self.gravitySpeed * pr.get_frame_time()
             self.camera.target.y += 0.2 - self.gravitySpeed * pr.get_frame_time()
+        else:
+            self.gravitySpeed = 0
+            self.camera.position.y = self.collidedPosition + 0.4
+            
 
-        if self.collidedFloor == True:
+        # if not self.collidedFloor == True:
+        #     self.gravitySpeed += self.gravity * pr.get_frame_time()
+        #     self.camera.position.y += 0.2 - self.gravitySpeed * pr.get_frame_time()
+        #     self.camera.target.y += 0.2 - self.gravitySpeed * pr.get_frame_time()
+        # else:
+        #     self.camera.position.y = self.collidedPosition + 0.4
+
+        #if not self.collidedFloor == False:
+
+
+
+        if pr.is_key_pressed(pr.KeyboardKey.KEY_SPACE) and self.collidedFloor == True:
             self.collidedFloor = False
-            self.camera.position.y = self.collidedPosition + 0.1
-
-
-
-        if pr.is_key_pressed(pr.KeyboardKey.KEY_SPACE):
-           # self.collidedFloor = False
             self.gravitySpeed += self.gravity * pr.get_frame_time()
             self.camera.position.y += 10 - self.gravitySpeed * pr.get_frame_time()
             self.camera.target.y += 10 - self.gravitySpeed * pr.get_frame_time()
@@ -82,7 +92,7 @@ class Player(Entity):
         # self.camera.target.y = pitch
 
     def DetectCollisionBase(self, boxCollide):
-        if not pr.check_collision_boxes(pr.BoundingBox(pr.Vector3(self.x - self.scale.x/2,
+        if pr.check_collision_boxes(pr.BoundingBox(pr.Vector3(self.x - self.scale.x/2,
                                                               self.y - self.scale.y/2,
                                                               self.z - self.scale.z/2),
                                                    pr.Vector3(self.x + self.scale.x/2,
@@ -95,12 +105,12 @@ class Player(Entity):
                                                 pr.Vector3(boxCollide.x + boxCollide.scale.x/2,
                                                            boxCollide.y + boxCollide.scale.y/2,
                                                            boxCollide.z + boxCollide.scale.z/2))):
-            self.collidedFloor = False
+            self.collidedFloor = True
             self.collidedPosition = boxCollide.y
         else:
-            self.collidedFloor = True
-            self.gravitySpeed = 0
+            self.collidedFloor = False
             self.collidedPosition = 0
+    
 
 
         

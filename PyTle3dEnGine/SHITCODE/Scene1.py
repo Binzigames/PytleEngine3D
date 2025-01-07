@@ -23,8 +23,8 @@ class BaseScene:
         self.memeImg = pr.load_image("./SHITVISUAL/SHITTEXTURES/PytleLogo.png")
         self.memeTexture = pr.load_texture_from_image(self.memeImg)
 
-        self.music = pr.load_music_stream("./SHITAUDIO/badapple.ogg")
-        pr.play_audio_stream(self.music.stream)
+        # self.music = pr.load_music_stream("./SHITAUDIO/badapple.ogg")
+        # pr.play_audio_stream(self.music.stream)
 
         
     # Я їбав цей пітон сука блять  
@@ -39,19 +39,20 @@ class BaseScene:
         #pr.draw_grid(250, 2)
         pr.draw_billboard(self.cameraa, self.memeTexture, pr.Vector3(0, 5, 0), 1, pr.WHITE)
         pr.end_mode_3d()
-        self.hud.draw("Bad Apple", "Test ZonE", self.player.collidedPosition)
+        self.hud.draw("Bad Apple", "Test Zone", self.player.collidedFloor)
         self.debug.Draw(self.cameraa)
         pr.draw_text(f"{self.cubes[2].model.meshCount}", 10, 15, 10, pr.WHITE)
         
 
     def Update(self):
-        pr.update_music_stream(self.music)
+        # pr.update_music_stream(self.music)
         pr.update_camera(self.camera, pr.CameraMode.CAMERA_FREE)
         self.player.Update()
+        self.player.DetectCollisionBase(self.cubes[1])
+        self.player.DetectCollisionBase(self.cubes[0])
         for i in range(len(self.cubes)):
             self.cubes[i].UpdateCollision()
             self.player.DetectCollisionRay(self.cubes[i].model)
-            self.player.DetectCollisionBase(self.cubes[i])
         
     
 
