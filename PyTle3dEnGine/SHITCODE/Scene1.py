@@ -1,6 +1,6 @@
 import pyray as pr
 import SHITCODE.BaseObjects as Obj
-import SHITCODE.Entity as Ent
+import SHITCODE.entity as Ent
 import SHITCODE.Debug as dg
 import SHITCODE.Hud as hud
 import numpy as np
@@ -48,11 +48,10 @@ class BaseScene:
         # pr.update_music_stream(self.music)
         pr.update_camera(self.camera, pr.CameraMode.CAMERA_FREE)
         self.player.Update()
-        self.player.DetectCollisionBase(self.cubes[1])
-        self.player.DetectCollisionBase(self.cubes[0])
+        self.player.DetectCollisionBase(self.cubes)
         for i in range(len(self.cubes)):
             self.cubes[i].UpdateCollision()
-            self.player.DetectCollisionRay(self.cubes[i].model)
+            #self.player.DetectCollisionRay(self.cubes[i].model)
         
     
 

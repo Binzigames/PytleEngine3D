@@ -76,10 +76,10 @@ class Player(Entity):
 
 
         if pr.is_key_pressed(pr.KeyboardKey.KEY_SPACE) and self.collidedFloor == True:
-            self.collidedFloor = False
             self.gravitySpeed += self.gravity * pr.get_frame_time()
             self.camera.position.y += 10 - self.gravitySpeed * pr.get_frame_time()
-            self.camera.target.y += 10 - self.gravitySpeed * pr.get_frame_time()
+            self.camera.target.y += self.camera.position.y
+            self.collidedFloor = False
         
         
         
@@ -91,36 +91,71 @@ class Player(Entity):
 
         # self.camera.target.y = pitch
 
-    def DetectCollisionBase(self, boxCollide):
-        if pr.check_collision_boxes(pr.BoundingBox(pr.Vector3(self.x - self.scale.x/2,
-                                                              self.y - self.scale.y/2,
-                                                              self.z - self.scale.z/2),
-                                                   pr.Vector3(self.x + self.scale.x/2,
-                                                              self.y + self.scale.y/2,
-                                                              self.z + self.scale.z/2)),
-                                                              
-                                 pr.BoundingBox(pr.Vector3(boxCollide.x - boxCollide.scale.x/2,
-                                                           boxCollide.y - boxCollide.scale.y/2,
-                                                           boxCollide.z - boxCollide.scale.z/2),
-                                                pr.Vector3(boxCollide.x + boxCollide.scale.x/2,
-                                                           boxCollide.y + boxCollide.scale.y/2,
-                                                           boxCollide.z + boxCollide.scale.z/2))):
-            self.collidedFloor = True
-            self.collidedPosition = boxCollide.y
-        else:
+    def DetectCollisionBase(self, boxCollides):
+        if isinstance(boxCollides, list):
+            for boxCollide in boxCollides:
+                if pr.check_collision_boxes(
+                        pr.BoundingBox(
+                            pr.Vector3(self.x - self.scale.x / 2,
+                                       self.y - self.scale.y / 2,
+                                       self.z - self.scale.z / 2),
+                            pr.Vector3(self.x + self.scale.x / 2,
+                                       self.y + self.scale.y / 2,
+                                       self.z + self.scale.z / 2)
+                        ),
+                        pr.BoundingBox(
+                            pr.Vector3(boxCollide.x - boxCollide.scale.x / 2,
+                                       boxCollide.y - boxCollide.scale.y / 2,
+                                       boxCollide.z - boxCollide.scale.z / 2),
+                            pr.Vector3(boxCollide.x + boxCollide.scale.x / 2,
+                                       boxCollide.y + boxCollide.scale.y / 2,
+                                       boxCollide.z + boxCollide.scale.z / 2)
+                        )
+                ):
+                    self.collidedFloor = True
+                    self.collidedPosition = boxCollide.y
+                    return True
             self.collidedFloor = False
             self.collidedPosition = 0
+            return False
+        else:
+            if pr.check_collision_boxes(
+                    pr.BoundingBox(
+                        pr.Vector3(self.x - self.scale.x / 2,
+                                   self.y - self.scale.y / 2,
+                                   self.z - self.scale.z / 2),
+                        pr.Vector3(self.x + self.scale.x / 2,
+                                   self.y + self.scale.y / 2,
+                                   self.z + self.scale.z / 2)
+                    ),
+                    pr.BoundingBox(
+                        pr.Vector3(boxCollides.x - boxCollides.scale.x / 2,
+                                   boxCollides.y - boxCollides.scale.y / 2,
+                                   boxCollides.z - boxCollides.scale.z / 2),
+                        pr.Vector3(boxCollides.x + boxCollides.scale.x / 2,
+                                   boxCollides.y + boxCollides.scale.y / 2,
+                                   boxCollides.z + boxCollides.scale.z / 2)
+                    )
+            ):
+                self.collidedFloor = True
+                self.collidedPosition = boxCollides.y
+                return True
+            else:
+                self.collidedFloor = False
+                self.collidedPosition = 0
+                return False
     
 
 
         
 
-    def DetectCollisionRay(self, mesh):
-        Collided = 0
-        for m in range(mesh.meshCount):
-            Collided = pr.get_ray_collision_mesh(self.floorRay, mesh.meshes[m], mesh.transform)
-            if Collided.hit:
-                print(f"COLLIDI! {mesh.meshCount}")
+    #def DetectCollisionRay(self, mesh):
+        #Collided = 0
+        #for m in range(mesh.meshCount):
+            #Collided = pr.get_ray_collision_mesh(self.floorRay, mesh.meshes[m], mesh.transform)
+            #if Collided.hit:
+                #print(f"COLLIDI! {mesh.meshCount}")
+
 
     
         
