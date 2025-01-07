@@ -26,8 +26,8 @@ class BaseScene:
         self.memeImg = pr.load_image("./SHITVISUAL/SHITTEXTURES/PytleLogo.png")
         self.memeTexture = pr.load_texture_from_image(self.memeImg)
 
-        # self.music = pr.load_music_stream("./SHITAUDIO/badapple.ogg")
-        # pr.play_audio_stream(self.music.stream)
+        self.music = pr.load_music_stream("./SHITAUDIO/badapple.ogg")
+        pr.play_audio_stream(self.music.stream)
 
         
     # Я їбав цей пітон сука блять  
@@ -49,7 +49,7 @@ class BaseScene:
         
 
     def Update(self):
-        # pr.update_music_stream(self.music)
+        pr.update_music_stream(self.music)
         pr.update_camera(self.camera, pr.CameraMode.CAMERA_FREE)
         self.player.Update()
         self.player.DetectCollisionBase(self.cubes)
@@ -66,8 +66,8 @@ class BaseScene:
             
         if self.debug.isShow == False:
             pr.set_mouse_position(int(pr.get_screen_width()/2), int(pr.get_screen_height()/2))
-            
-        
+
+
 class Scene:
     def __init__(self):
         self.camera = pr.Camera3D([1.0, 1.0, 1.0], [0.0, 0.0, 0.0], [0.0, 1.0, 0.0], 40, 0)

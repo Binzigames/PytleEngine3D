@@ -29,14 +29,25 @@ class Player(Entity):
         self.gravitySpeed = 0
         self.floorRay = pr.Ray(pr.Vector3(self.x, self.y, self.z), pr.Vector3(self.x, 0, self.z))
         self.collidedFloor = False
-        self.collidedPosition = 0  # Initial rotation angle in degree
+        self.collidedPosition = 0
+        self.kill = False
+        
+        self.bullets = []
 
     def Draw(self):
         pr.draw_cube_wires(pr.Vector3(self.x, self.y, self.z), self.scale.x, self.scale.y, self.scale.z, pr.WHITE)
         pr.draw_ray(pr.Ray(pr.Vector3(self.camera.position.x, self.camera.position.y, self.camera.position.z), pr.Vector3(self.camera.target.x, self.camera.target.y, self.camera.target.z)), pr.BLACK)
+        for i in range(len(self.bullets)):
+            self.bullets[i].Draw()
 
    
     def Update(self):
+
+        for i in range(len(self.bullets)):
+            self.bullets[i].Update()
+
+        
+
         self.floorRay = pr.Ray(pr.Vector3(self.x, self.y, self.z), pr.Vector3(0, -1, 0))
         self.x = self.camera.position.x
         self.y = self.camera.position.y - 0.2
@@ -49,7 +60,9 @@ class Player(Entity):
             self.speed = 4
             self.camera.fovy = 70
         
-
+        if pr.is_mouse_button_pressed(pr.MouseButton.MOUSE_BUTTON_LEFT):
+            self.bullets.append(Bullet(self.camera.position.x, self.camera.position.y, self.camera.position.z, 0, 0, 0, self.camera))
+            print(self.bullets)
 
         if self.collidedFloor == False:
             self.gravitySpeed += self.gravity * pr.get_frame_time()
@@ -153,8 +166,23 @@ class Player(Entity):
                 #print(f"COLLIDI! {mesh.meshCount}")
 
 
-    
-        
-        
+class Bullet(Entity):
+    def __init__(self, x, y, z, speed, velocity, acceleration, camera):
+        super().__init__(x, y, z, speed, velocity, acceleration)
+        self.camera = camera
+        self.scale = pr.Vector3(0.1, 0.1, 0.1)
+        self.texture = pr.load_texture_from_image(pr.gen_image_checked(2, 2, 1, 1, pr.BLACK, pr.MAGENTA))
+
+    def Update(self):
+        self.y += 1 * pr.get_frame_time()
+
+        if self.y >= 10:
+            del self
+            
+
+    def Draw(self):
+        pr.draw_cube_wires(pr.Vector3(self.x, self.y, self.z), self.scale.x, self.scale.y, self.scale.z, pr.WHITE)
+        pr.draw_billboard(self.camera, self.texture, pr.Vector3(self.x, self.y, self.z), 1, pr.WHITE)
+
 
 
