@@ -10,6 +10,7 @@ class Game:
         pr.set_config_flags(pr.ConfigFlags.FLAG_WINDOW_RESIZABLE | pr.ConfigFlags.FLAG_VSYNC_HINT)
         pr.init_window(1280, 900, "Pytle3D (proto ver.)")
         pr.init_audio_device()
+        pr.set_target_fps(60)
         self.Test_map =[
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
             [1, 0, 0, 1, 1, 1, 0, 0, 0, 1,],

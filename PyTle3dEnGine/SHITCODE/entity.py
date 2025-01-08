@@ -65,9 +65,9 @@ class Player(Entity):
             print(self.bullets)
 
         if self.collidedFloor == False:
-            self.gravitySpeed += self.gravity * pr.get_frame_time()
-            self.camera.position.y += 0.2 - self.gravitySpeed * pr.get_frame_time()
-            self.camera.target.y += 0.2 - self.gravitySpeed * pr.get_frame_time()
+            self.gravitySpeed += self.gravity / 60
+            self.camera.position.y += 0.2 - self.gravitySpeed / 60
+            self.camera.target.y += 0.2 - self.gravitySpeed / 60
         else:
             self.gravitySpeed = 0
             self.camera.position.y = self.collidedPosition + 0.4
@@ -85,17 +85,17 @@ class Player(Entity):
 
 
         if pr.is_key_pressed(pr.KeyboardKey.KEY_SPACE) and self.collidedFloor == True:
-            self.gravitySpeed += self.gravity * pr.get_frame_time()
-            self.camera.position.y += 10 - self.gravitySpeed * pr.get_frame_time()
+            self.gravitySpeed += self.gravity / 60
+            self.camera.position.y += 10 - self.gravitySpeed / 60
             self.camera.target.y += self.camera.position.y
-            self.gravitySpeed += self.gravity * pr.get_frame_time()
-            self.camera.position.y += 0.2 - self.gravitySpeed * pr.get_frame_time()
-            self.camera.target.y += 0.2 - self.gravitySpeed * pr.get_frame_time()
+            self.gravitySpeed += self.gravity / 60
+            self.camera.position.y += 0.2 - self.gravitySpeed / 60
+            self.camera.target.y += 0.2 - self.gravitySpeed / 60
         
         
         
-        pr.update_camera_pro(self.camera, pr.Vector3((pr.is_key_down(pr.KeyboardKey.KEY_W)* self.speed * pr.get_frame_time() - pr.is_key_down(pr.KeyboardKey.KEY_S) * self.speed * pr.get_frame_time()),
-                                                     (pr.is_key_down(pr.KeyboardKey.KEY_D)* self.speed * pr.get_frame_time() - pr.is_key_down(pr.KeyboardKey.KEY_A) * self.speed * pr.get_frame_time()), 0),
+        pr.update_camera_pro(self.camera, pr.Vector3((pr.is_key_down(pr.KeyboardKey.KEY_W)* self.speed / 60 - pr.is_key_down(pr.KeyboardKey.KEY_S) * self.speed / 60),
+                                                     (pr.is_key_down(pr.KeyboardKey.KEY_D)* self.speed / 60 - pr.is_key_down(pr.KeyboardKey.KEY_A) * self.speed / 60), 0),
                                                      pr.Vector3(pr.get_mouse_delta().x * self.sensivity * pr.get_frame_time(), pr.get_mouse_delta().y * self.sensivity * pr.get_frame_time(), 0), 0)
         # self.camera.target.x = 
 
