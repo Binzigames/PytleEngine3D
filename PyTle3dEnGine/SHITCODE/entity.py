@@ -60,8 +60,8 @@ class Player(Entity):
             self.speed = 4
             self.camera.fovy = 70
         
-        if pr.is_mouse_button_pressed(pr.MouseButton.MOUSE_BUTTON_LEFT):
-            self.bullets.append(Bullet(self.camera.position.x, self.camera.position.y, self.camera.position.z, 0, 0, 0, self.camera))
+        if pr.is_mouse_button_down(pr.MouseButton.MOUSE_BUTTON_LEFT):
+            self.bullets.append(Bullet(self.camera.position.x, self.camera.position.y, self.camera.position.z, 0, 0, 0, self.camera, pr.Vector3(self.camera.target.x, self.camera.target.y, self.camera.target.z)))
             print(self.bullets)
 
         if self.collidedFloor == False:
@@ -167,22 +167,19 @@ class Player(Entity):
 
 
 class Bullet(Entity):
-    def __init__(self, x, y, z, speed, velocity, acceleration, camera):
+    def __init__(self, x, y, z, speed, velocity, acceleration, camera, target):
         super().__init__(x, y, z, speed, velocity, acceleration)
         self.camera = camera
         self.scale = pr.Vector3(0.1, 0.1, 0.1)
         self.texture = pr.load_texture_from_image(pr.gen_image_checked(2, 2, 1, 1, pr.BLACK, pr.MAGENTA))
+        self.target = target
 
     def Update(self):
-        self.y += 1 * pr.get_frame_time()
-
-        if self.y >= 10:
-            del self
+        pass
             
 
     def Draw(self):
-        pr.draw_cube_wires(pr.Vector3(self.x, self.y, self.z), self.scale.x, self.scale.y, self.scale.z, pr.WHITE)
-        pr.draw_billboard(self.camera, self.texture, pr.Vector3(self.x, self.y, self.z), 1, pr.WHITE)
+        pr.draw_ray(pr.Ray(pr.Vector3(self.x, self.y, self.z), pr.Vector3(self.target.x, self.target.y - 4, self.target.z)), pr.RED)
 
 
 

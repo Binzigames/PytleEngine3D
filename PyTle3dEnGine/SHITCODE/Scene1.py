@@ -14,7 +14,7 @@ class BaseScene:
         self.camera = pr.Camera3D([1.0, 1.0, 1.0], [0.0, 0.0, 0.0], [0.0, 1.0, 0.0], 60, 0)
         self.cubes =  [Obj.Cube(75, 2, 75, 0, 10, 1, 10, pr.BLACK),
                       Obj.Cube(50, 5, 75, 0, 10, 1, 10, pr.BLACK),
-                      Obj.Cube(1, 2, 2, 0, 5 * 21, 0.2, 5 * 21, pr.BLUE),
+                      Obj.Cube(1, 2, 2, 0, 5 * 21, 5, 5 * 21, pr.BLUE),
                       Obj.Marisa(0, 0, 0, 0, 1, 1, 1),
                       Obj.Skybox(0, -100, 0, 0, 5000, 0, 5000)]
         
