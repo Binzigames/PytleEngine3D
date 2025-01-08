@@ -88,7 +88,9 @@ class Player(Entity):
             self.gravitySpeed += self.gravity * pr.get_frame_time()
             self.camera.position.y += 10 - self.gravitySpeed * pr.get_frame_time()
             self.camera.target.y += self.camera.position.y
-            self.collidedFloor = False
+            self.gravitySpeed += self.gravity * pr.get_frame_time()
+            self.camera.position.y += 0.2 - self.gravitySpeed * pr.get_frame_time()
+            self.camera.target.y += 0.2 - self.gravitySpeed * pr.get_frame_time()
         
         
         
