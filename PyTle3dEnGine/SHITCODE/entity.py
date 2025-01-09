@@ -19,6 +19,7 @@ class Entity:
 class Player(Entity):
     def __init__(self, x, y, z, speed, velocity, acceleration):
         super().__init__(x, y, z, speed, velocity, acceleration)
+        self.lock = False
         self.camera = pr.Camera3D(pr.Vector3(self.x, self.y, self.z), pr.Vector3(2, 2, 2), pr.Vector3(0, 1, 0), 70, 0)
         
         self.scale = pr.Vector3(0.1, 0.5, 0.1)
@@ -26,7 +27,7 @@ class Player(Entity):
         self.speed = 4
         self.sensivity = 5
         
-        self.gravity = 10
+        self.gravity = 7
         self.gravitySpeed = 0
         self.floorRay = pr.Ray(pr.Vector3(self.x, self.y, self.z), pr.Vector3(self.x, 0, self.z))
         self.collidedFloor = False
@@ -56,7 +57,7 @@ class Player(Entity):
 
         self.floorRay = pr.Ray(pr.Vector3(self.x, self.y, self.z), pr.Vector3(0, -1, 0))
         self.x = self.camera.position.x
-        self.y = self.camera.position.y - 0.2
+        self.y = self.y
         self.z = self.camera.position.z
 
         if pr.is_key_down(pr.KeyboardKey.KEY_LEFT_SHIFT):
@@ -66,17 +67,20 @@ class Player(Entity):
             self.speed = 4
             self.camera.fovy = 70
         
-        if pr.is_mouse_button_down(pr.MouseButton.MOUSE_BUTTON_LEFT):
+        if pr.is_mouse_button_pressed(pr.MouseButton.MOUSE_BUTTON_LEFT):
             self.bullets.append(Bullet(self.camera.position.x, self.camera.position.y, self.camera.position.z, 0, 0, 0, self.camera, pr.Vector3(self.camera.target.x, self.camera.target.y, self.camera.target.z)))
             print(self.bullets)
 
         if self.collidedFloor == False:
+            self.y = self.camera.position.y
             self.gravitySpeed += self.gravity / 60
             self.camera.position.y += 0.2 - self.gravitySpeed / 60
             self.camera.target.y += 0.2 - self.gravitySpeed / 60
+            self.y += 0.2 - self.gravitySpeed / 60
         else:
+            self.y = self.collidedPosition + 0.4
+            # self.camera.position.y = self.y - 0.3
             self.gravitySpeed = 0
-            self.camera.position.y = self.collidedPosition + 0.4
             
 
         # if not self.collidedFloor == True:
@@ -94,16 +98,17 @@ class Player(Entity):
             self.gravitySpeed += self.gravity / 60
             self.camera.position.y += 10 - self.gravitySpeed / 60
             self.camera.target.y += self.camera.position.y
+            
             self.gravitySpeed += self.gravity / 60
             self.camera.position.y += 0.2 - self.gravitySpeed / 60
             self.camera.target.y += 0.2 - self.gravitySpeed / 60
         
         
-        
-        pr.update_camera_pro(self.camera, pr.Vector3((pr.is_key_down(pr.KeyboardKey.KEY_W)* self.speed / 60 - pr.is_key_down(pr.KeyboardKey.KEY_S) * self.speed / 60),
-                                                     (pr.is_key_down(pr.KeyboardKey.KEY_D)* self.speed / 60 - pr.is_key_down(pr.KeyboardKey.KEY_A) * self.speed / 60), 0),
-                                                     pr.Vector3(pr.get_mouse_delta().x * self.sensivity * pr.get_frame_time(), pr.get_mouse_delta().y * self.sensivity * pr.get_frame_time(), 0), 0)
-        # self.camera.target.x = 
+        if self.lock == False:
+            pr.update_camera_pro(self.camera, pr.Vector3((pr.is_key_down(pr.KeyboardKey.KEY_W)* self.speed / 60 - pr.is_key_down(pr.KeyboardKey.KEY_S) * self.speed / 60),
+                                                        (pr.is_key_down(pr.KeyboardKey.KEY_D)* self.speed / 60 - pr.is_key_down(pr.KeyboardKey.KEY_A) * self.speed / 60), 0),
+                                                        pr.Vector3(pr.get_mouse_delta().x * self.sensivity * pr.get_frame_time(), pr.get_mouse_delta().y * self.sensivity * pr.get_frame_time(), 0), 0)
+            # self.camera.target.x = 
 
 
         # self.camera.target.y = pitch
@@ -181,13 +186,24 @@ class Bullet(Entity):
         self.scale = pr.Vector3(0.1, 0.1, 0.1)
         self.texture = pr.load_texture_from_image(pr.gen_image_checked(2, 2, 1, 1, pr.BLACK, pr.MAGENTA))
         self.target = target
+        self.delay = 100
+
+    def __delattr__(self, name):
+        del self.camera
+        del self.target
+        del self.delay
 
     def Update(self):
-        pass
+        self.delay -= 1
+        if self.delay <= 0:
+            del self
             
 
     def Draw(self):
-        pr.draw_ray(pr.Ray(pr.Vector3(self.x, self.y, self.z), pr.Vector3(self.target.x, self.target.y - 4, self.target.z)), pr.RED)
+        if not self.delay <= 0:
+            pr.draw_ray(pr.Ray(pr.Vector3(self.x, self.y, self.z), pr.Vector3(self.target.x, self.target.y - 4, self.target.z)), pr.RED)
+
+    
 
 
 
