@@ -49,8 +49,8 @@ class BaseScene:
         
 
     def Update(self):
-        # pr.update_music_stream(self.music)
         pr.update_camera(self.camera, pr.CameraMode.CAMERA_FREE)
+        # pr.update_music_stream(self.music)
         self.player.Update()
         self.player.DetectCollisionBase(self.cubes)
         for i in range(len(self.cubes)):
@@ -66,6 +66,14 @@ class BaseScene:
             
         if self.debug.isShow == False:
             pr.set_mouse_position(int(pr.get_screen_width()/2), int(pr.get_screen_height()/2))
+
+        if pr.is_key_pressed(pr.KeyboardKey.KEY_LEFT_CONTROL):
+            if self.cameraa == self.player.camera:
+                self.cameraa = self.camera
+                self.player.lock = True
+            else:
+                self.cameraa = self.player.camera
+                self.player.lock = False
 
 
 class Scene:
