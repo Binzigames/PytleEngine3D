@@ -4,6 +4,9 @@ import SHITCODE.Debug as debugg
 import SHITCODE.SceneReader as SR
 from SHITCODE.SceneReader import ReadScene
 
+gameScreenHeight = 732
+gameScreenWidth = 480
+
 
 class Game:
     def __init__(self):
@@ -21,8 +24,8 @@ class Game:
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,]
         ]
 
-        self.gameScreenWidth = 732
-        self.gameScreenHeight = 480
+        self.gameScreenWidth = gameScreenHeight
+        self.gameScreenHeight = gameScreenWidth
         self.renderScreen = pr.RenderTexture2D
         self.renderScreen = pr.load_render_texture(self.gameScreenWidth, self.gameScreenHeight)
         #pr.set_texture_filter(self.renderScreen.texture, 1)
@@ -30,7 +33,7 @@ class Game:
         #pr.set_target_fps(60)
         self.scene = ass.BaseScene()
         #pr.toggle_fullscreen()
-        
+
     
         
 

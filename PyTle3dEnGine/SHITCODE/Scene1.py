@@ -3,7 +3,6 @@ import SHITCODE.BaseObjects as Obj
 import SHITCODE.entity as Ent
 import SHITCODE.Debug as dg
 import SHITCODE.Hud as hud
-import SHITCODE.Gun as gn
 import numpy as np
 import glm
 
@@ -19,7 +18,6 @@ class BaseScene:
                       Obj.Skybox(0, -100, 0, 0, 5000, 0, 5000)]
         
         self.player = Ent.Player(1, 50, 2, 2, 2, 2)
-        self.gun = gn.Gun()
         self.count = 0
         self.cameraa = self.player.camera
 
@@ -39,11 +37,12 @@ class BaseScene:
         
         self.player.Draw()
 
+
         #pr.draw_grid(250, 2)
         pr.draw_billboard(self.cameraa, self.memeTexture, pr.Vector3(0, 5, 0), 1, pr.WHITE)
         pr.end_mode_3d()
-        self.gun.Draw()
         self.hud.draw("Bad Apple", "Test Zone", self.player.collidedPosition)
+        self.player.DrawGun()
         self.debug.Draw(self.cameraa)
         pr.draw_text(f"{self.cubes[2].model.meshCount}", 10, 15, 10, pr.WHITE)
         

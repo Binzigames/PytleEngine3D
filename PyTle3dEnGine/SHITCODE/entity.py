@@ -1,6 +1,7 @@
 import pyray as pr
 import glm
 import SHITCODE.BaseObjects as obj
+import SHITCODE.Gun as gn
 
 class Entity:
     def __init__(self, x, y, z, speed, velocity, acceleration):
@@ -33,13 +34,18 @@ class Player(Entity):
         self.kill = False
         
         self.bullets = []
+        self.gun = gn.Gun()
 
     def Draw(self):
         pr.draw_cube_wires(pr.Vector3(self.x, self.y, self.z), self.scale.x, self.scale.y, self.scale.z, pr.WHITE)
         pr.draw_ray(pr.Ray(pr.Vector3(self.camera.position.x, self.camera.position.y, self.camera.position.z), pr.Vector3(self.camera.target.x, self.camera.target.y, self.camera.target.z)), pr.BLACK)
         for i in range(len(self.bullets)):
             self.bullets[i].Draw()
-
+    def DrawGun(self):
+        if pr.is_mouse_button_down(pr.MouseButton.MOUSE_BUTTON_LEFT):
+            self.gun.draw_muzle_flash()
+        self.gun.Draw()
+        print("its looks like a gun!")
    
     def Update(self):
 
