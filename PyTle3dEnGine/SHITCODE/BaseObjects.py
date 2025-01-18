@@ -66,4 +66,4 @@ class Marisa(Base):
         self.model.materials[0].maps[pr.MaterialMapIndex.MATERIAL_MAP_ALBEDO].texture = self.texture
 
     def Draw(self):
-        pr.draw_model(self.model, pr.Vector3(self.x, self.y, self.z), 1, pr.WHITE)
+        pr.draw_model(self.model, pr.Vector3(self.x, self.y, self.z), 10, pr.WHITE)

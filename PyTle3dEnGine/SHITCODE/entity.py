@@ -57,7 +57,7 @@ class Player(Entity):
 
         self.floorRay = pr.Ray(pr.Vector3(self.x, self.y, self.z), pr.Vector3(0, -1, 0))
         self.x = self.camera.position.x
-        self.y = self.y
+        self.y = self.camera.position.y
         self.z = self.camera.position.z
 
         if pr.is_key_down(pr.KeyboardKey.KEY_LEFT_SHIFT):
@@ -67,7 +67,7 @@ class Player(Entity):
             self.speed = 4
             self.camera.fovy = 70
         
-        if pr.is_mouse_button_pressed(pr.MouseButton.MOUSE_BUTTON_LEFT):
+        if pr.is_mouse_button_down(pr.MouseButton.MOUSE_BUTTON_LEFT):
             self.bullets.append(Bullet(self.camera.position.x, self.camera.position.y, self.camera.position.z, 0, 0, 0, self.camera, pr.Vector3(self.camera.target.x, self.camera.target.y, self.camera.target.z)))
             print(self.bullets)
 
@@ -78,7 +78,7 @@ class Player(Entity):
             self.camera.target.y += 0.2 - self.gravitySpeed / 60
             self.y += 0.2 - self.gravitySpeed / 60
         else:
-            self.y = self.collidedPosition + 0.4
+            self.camera.position.y = self.collidedPosition + 0.3
             # self.camera.position.y = self.y - 0.3
             self.gravitySpeed = 0
             
@@ -96,12 +96,13 @@ class Player(Entity):
 
         if pr.is_key_pressed(pr.KeyboardKey.KEY_SPACE) and self.collidedFloor == True:
             self.gravitySpeed += self.gravity / 60
-            self.camera.position.y += 10 - self.gravitySpeed / 60
+            self.y += 2 - self.gravitySpeed / 60
+            self.camera.position.y += 2 - self.gravitySpeed / 60
             self.camera.target.y += self.camera.position.y
             
             self.gravitySpeed += self.gravity / 60
-            self.camera.position.y += 0.2 - self.gravitySpeed / 60
-            self.camera.target.y += 0.2 - self.gravitySpeed / 60
+            self.camera.position.y += 2 - self.gravitySpeed / 60
+            self.camera.target.y += 2 - self.gravitySpeed / 60
         
         
         if self.lock == False:
