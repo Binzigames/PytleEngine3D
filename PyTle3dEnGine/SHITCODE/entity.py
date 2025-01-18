@@ -57,7 +57,7 @@ class Player(Entity):
 
         self.floorRay = pr.Ray(pr.Vector3(self.x, self.y, self.z), pr.Vector3(0, -1, 0))
         self.x = self.camera.position.x
-        self.y = self.camera.position.y
+        self.y = self.camera.position.y - 0.2
         self.z = self.camera.position.z
 
         if pr.is_key_down(pr.KeyboardKey.KEY_LEFT_SHIFT):
@@ -78,7 +78,7 @@ class Player(Entity):
             self.camera.target.y += 0.2 - self.gravitySpeed / 60
             self.y += 0.2 - self.gravitySpeed / 60
         else:
-            self.camera.position.y = self.collidedPosition + 0.3
+            self.y = self.camera.position.y
             # self.camera.position.y = self.y - 0.3
             self.gravitySpeed = 0
             
